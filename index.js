@@ -21,10 +21,8 @@ if (config.MONGOOSE_DEBUG) {
   })
 }
 
-if (!module.parent) {
-  app.listen(config.port, () => {
-    console.info(`server started on port ${config.port} (${config.env})`)
-  })
-}
+app.listen(config.port, () => {
+  console.info(`server started on port ${config.port} (${config.env})`)
+})
 
 module.exports = app

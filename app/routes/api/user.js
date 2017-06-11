@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 
 router.get('/', async (ctx, next) => {
-  ctx.body = 'this is a user response'
+  ctx.body = 'hello koa'
 })
 
 router.post('/login', async (ctx, next) => {
