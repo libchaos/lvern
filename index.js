@@ -4,7 +4,7 @@ const appConfig = require('mount-config')(path.resolve(__dirname, 'config'))
 console.log(appConfig)
 const mongoConfig = appConfig.mongo
 
-if (mongoConfig) {
+if (mongoConfig && typeof mongoConfig === 'function') {
   mongoConfig()
 }
 
