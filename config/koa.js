@@ -9,7 +9,6 @@ const mount = require('mount-koa-routes')
 const path = require('path')
 
 const config = require('./config')
-
 const app = new Koa()
 
 if (config.env === 'development') {

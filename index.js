@@ -1,28 +1,15 @@
-const mongoose = require('mongoose')
-const util = require('util')
+const path = require('path')
 
-const config = require('./config/config')
-const app = require('./config/koa')
+const appConfig = require('mount-config')(path.resolve(__dirname, 'config'))
+console.log(appConfig)
+const mongoConfig = appConfig.mongo
 
-const debug = require('debug')('lvern:index')
-
-mongoose.Promise = global.Promise
-
-const mongoUri = config.mongo.host
-
-mongoose.connect(mongoUri, {server: {socketOptions: {keepAlive: 1}}})
-mongoose.connection.on('error', () => {
-  throw new Error(`unable to connect to database: ${mongoUri}`)
-})
-
-if (config.MONGOOSE_DEBUG) {
-  mongoose.set('debug', (collectionName, method, query, doc) => {
-    debug(`${collectionName}.${method}`, util.inspect(query, false, 20), doc)
-  })
+if (mongoConfig) {
+  mongoConfig()
 }
 
-app.listen(config.port, () => {
-  console.info(`server started on port ${config.port} (${config.env})`)
-})
+const app = appConfig.koa
 
-module.exports = app
+app.listen(appConfig.config.port, () => {
+  console.info(`server started on port ${appConfig.config.port} (${appConfig.config.env})`)
+})
