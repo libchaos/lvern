@@ -1,7 +1,7 @@
 const path = require('path')
 
-const appConfig = require('mount-config')(path.resolve(__dirname, 'config'))
-console.log(appConfig)
+const appConfig = global.appConfig = require('mount-config')(path.resolve(__dirname, 'config'))
+const appModels = global.appModels = require('mount-models')(path.resolve(__dirname, './app/models'))
 const mongoConfig = appConfig.mongo
 
 if (mongoConfig && typeof mongoConfig === 'function') {
@@ -10,6 +10,6 @@ if (mongoConfig && typeof mongoConfig === 'function') {
 
 const app = appConfig.koa
 
-app.listen(appConfig.config.port, () => {
+app.listen(appConfig.config.port || 4040, () => {
   console.info(`server started on port ${appConfig.config.port} (${appConfig.config.env})`)
 })
